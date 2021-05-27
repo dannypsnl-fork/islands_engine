@@ -13,13 +13,13 @@ defmodule IslandsEngine.Island do
     end
   end
 
-  def add_coordinates(offsets, upper_left) do
+  defp add_coordinates(offsets, upper_left) do
     Enum.reduce_while(offsets, MapSet.new(), fn offset, acc ->
       add_coordinate(acc, upper_left, offset)
     end)
   end
 
-  def add_coordinate(coordinates, %Coordinate{row: row, col: col}, {row_offset, col_offset}) do
+  defp add_coordinate(coordinates, %Coordinate{row: row, col: col}, {row_offset, col_offset}) do
     case Coordinate.new(row + row_offset, col + col_offset) do
       {:ok, coordinate} ->
         {:cont, MapSet.put(coordinates, coordinate)}
@@ -29,25 +29,25 @@ defmodule IslandsEngine.Island do
     end
   end
 
-  def offsets(:square) do
+  defp offsets(:square) do
     [{0, 0}, {0, 1}, {1, 0}, {1, 1}]
   end
 
-  def offsets(:atoll) do
+  defp offsets(:atoll) do
     [{0, 0}, {0, 1}, {1, 1}, {2, 0}, {2, 1}]
   end
 
-  def offsets(:dot) do
+  defp offsets(:dot) do
     [{0, 0}]
   end
 
-  def offsets(:l_shape) do
+  defp offsets(:l_shape) do
     [{0, 0}, {1, 0}, {2, 0}, {2, 1}]
   end
 
-  def offsets(:s_shape) do
+  defp offsets(:s_shape) do
     [{0, 1}, {0, 2}, {1, 0}, {1, 1}]
   end
 
-  def offsets(_), do: {:error, :invalid_island_type}
+  defp offsets(_), do: {:error, :invalid_island_type}
 end
