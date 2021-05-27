@@ -7,7 +7,7 @@ defmodule IslandsEngine.Island do
   def new(type, %Coordinate{} = upper_left) do
     with [_ | _] = offsets <- offsets(type),
          %MapSet{} = coordinates <- add_coordinates(offsets, upper_left) do
-      %Island{coordinates: MapSet.new(), hit_coordinates: MapSet.new()}
+      %Island{coordinates: coordinates, hit_coordinates: MapSet.new()}
     else
       error -> error
     end
