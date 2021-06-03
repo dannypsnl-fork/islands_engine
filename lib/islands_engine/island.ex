@@ -13,6 +13,21 @@ defmodule IslandsEngine.Island do
     end
   end
 
+  def guess(island, coordinate) do
+    case MapSet.member?(island.coordinates, coordinate) do
+      true ->
+        hit_coordinates = MapSet.put(island.hit_coordinates, coordinate)
+        {:hit, %{island | hit_coordinates: hit_coordinates}}
+
+      false ->
+        :miss
+    end
+  end
+
+  def forested?(island) do
+    MapSet.equal?(island.coordinates, island.hit_coordinates)
+  end
+
   def overlaps?(existing_island, new_island) do
     not MapSet.disjoint?(existing_island.coordinates, new_island.coordinates)
   end
